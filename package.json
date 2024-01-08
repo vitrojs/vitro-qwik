@@ -1,0 +1,65 @@
+{
+  "name": "@vitro/qwik",
+  "version": "0.1.5",
+  "description": "Qwik-vitro allows adding vitro components into existing Qwik application",
+  "scripts": {
+    "postinstall": "test lib || pnpm run build.lib",
+    "build": "pnpm run build.lib",
+    "build.client": "vite build",
+    "build.lib": "vite build --mode lib",
+    "build.ssr": "vite build --ssr src/entry.ssr.tsx",
+    "dev": "vite",
+    "dev.debug": "node --inspect-brk node_modules/vite/bin/vite.js --mode ssr --force",
+    "dev.ssr": "vite --mode ssr",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check .",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "release": "pnpm build; npm publish --tag latest  --access public",
+    "start": "pnpm run dev",
+    "typecheck": "tsc --noEmit"
+  },
+  "trustedDependencies": [
+    "vitro",
+    "@vitro/zag",
+    "@vitro/ark",
+    "@vitro/lucide"
+  ],
+  "devDependencies": {
+    "@builder.io/qwik": "latest",
+    "bun-types": "^1.0.21",
+    "prettier": "^3.1.1",
+    "vite": "^5.0.11",
+    "vite-plugin-dts": "^3.7.0",
+    "vite-tsconfig-paths": "^4.2.3",
+    "vitro": "github:vitrojs/vitro"
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/index.qwik.mjs",
+      "require": "./lib/index.qwik.cjs",
+      "types": "./lib/index.qwik.d.ts"
+    },
+    "./vite": {
+      "import": "./lib/vite.mjs",
+      "require": "./lib/vite.cjs",
+      "types": "./lib/vite.d.ts"
+    }
+  },
+  "files": [
+    "lib",
+    "vite"
+  ],
+  "license": "MIT",
+  "homepage": "https://qwik.builder.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stackcraft-io/vitro"
+  },
+  "bugs": {
+    "url": "https://github.com/FlatMapIO/vitro/issues"
+  },
+  "type": "module",
+  "main": "./lib/index.qwik.mjs",
+  "qwik": "./lib/index.qwik.mjs",
+  "types": "./lib/index.qwik.d.ts"
+}
