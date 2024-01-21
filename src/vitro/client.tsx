@@ -1,3 +1,4 @@
 /* @jsxImportSource vitro */
 
-export { render, $ as o, $$ as get } from 'vitro'
+export { $$ as get, render, $ as signal } from 'vitro';
+
