@@ -1,6 +1,6 @@
 {
   "name": "vitro-qwik",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Qwik-vitro allows adding vitro components into existing Qwik application",
   "scripts": {
     "postinstall": "test lib || pnpm run build.lib",
@@ -31,8 +31,7 @@
     "bun-types": "^1.0.24",
     "vite": "^5.0.12",
     "vite-plugin-dts": "^3.7.0",
-    "vite-tsconfig-paths": "^4.2.3",
-    "vitro": "github:vitrojs/vitro"
+    "vite-tsconfig-paths": "^4.2.3"
   },
   "exports": {
     ".": {
@@ -62,5 +61,8 @@
   "type": "module",
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
-  "types": "./lib/index.qwik.d.ts"
+  "types": "./lib/index.qwik.d.ts",
+  "dependencies": {
+    "vitro": "github:vitrojs/vitro"
+  }
 }
