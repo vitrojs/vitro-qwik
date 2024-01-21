@@ -8,7 +8,7 @@ export function main(
   RootCmp: any,
   props: any,
 ) {
-  return mainExactProps(slotEl, scopeId, RootCmp, getVobyProps(props))
+  return mainExactProps(slotEl, scopeId, RootCmp, getVitroProps(props))
 }
 
 export function mainExactProps(
@@ -42,7 +42,7 @@ const SlotElement = (props: {
   })
 }
 
-export const getVobyProps = (
+export const getVitroProps = (
   props: Record<string, any>,
 ): Record<string, any> => {
   const obj: Record<string, any> = {}
@@ -74,7 +74,7 @@ export const useWakeupSignal = (
   const signal = useSignal(false)
   const activate = $(() => (signal.value = true))
   if (isServer) {
-    // voby component is client-only
+    // vitro component is client-only
     useOnDocument('qinit', activate)
   }
   return [signal, activate] as const

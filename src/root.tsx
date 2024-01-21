@@ -39,7 +39,7 @@ export const Root = component$(() => {
           </button>
           {show.value ? (
             <App multiple={mul.value}>
-              <div>Counter power by voby (multiple: {mul})</div>
+              <div>Counter power by vitro (multiple: {mul})</div>
             </App>
           ) : null}
         </main>

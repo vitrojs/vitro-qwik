@@ -1,26 +1,26 @@
 import type { PropFunction } from '@builder.io/qwik'
-import {} from 'vitro'
+import { } from 'vitro'
 
 export type FunctionComponent<P = {}> = JSX.Component<P>
 
 export interface QwikifyBase {
   /**
-   * Adds a `click` event listener to the host element, this event will be dispatched even if the Voby component is not hydrated.
+   * Adds a `click` event listener to the host element, this event will be dispatched even if the Vitro component is not hydrated.
    */
   'host:onClick$'?: PropFunction<(ev: Event) => void>
 
   /**
-   * Adds a `blur` event listener to the host element, this event will be dispatched even if the Voby component is not hydrated.
+   * Adds a `blur` event listener to the host element, this event will be dispatched even if the Vitro component is not hydrated.
    */
   'host:onBlur$'?: PropFunction<(ev: Event) => void>
 
   /**
-   * Adds a `focus` event listener to the host element, this event will be dispatched even if the Voby component is not hydrated.
+   * Adds a `focus` event listener to the host element, this event will be dispatched even if the Vitro component is not hydrated.
    */
   'host:onFocus$'?: PropFunction<(ev: Event) => void>
 
   /**
-   * Adds a `mouseover` event listener to the host element, this event will be dispatched even if the Voby component is not hydrated.
+   * Adds a `mouseover` event listener to the host element, this event will be dispatched even if the Vitro component is not hydrated.
    */
   'host:onMouseOver$'?: PropFunction<(ev: Event) => void>
 
