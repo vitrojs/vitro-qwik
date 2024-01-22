@@ -17,7 +17,7 @@ export function main(
 	RootCmp: any,
 	props: any,
 	qwikClientPropsSignal: Signal<Record<string, any>>,
-) {
+): JSX.Element {
 	useEffect(() => {
 		for (const key in props) {
 			const val = props[key]
