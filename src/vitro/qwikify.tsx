@@ -16,7 +16,10 @@ import {
 } from '@builder.io/qwik'
 
 import { isBrowser, isServer } from '@builder.io/qwik/build'
-import * as client from './client'
+// import { render, signal } from './client'
+
+export { $$ as get, render, $ as signal } from 'vitro';
+
 import { main, splitProps, useWakeupSignal } from './slot'
 
 import { ObservableReadonly, isObservable } from 'vitro'
@@ -68,7 +71,7 @@ export function qwikifyQrl<PROPS extends {}>(
 					const props: Record<string, any> = {}
 					for (const key in qwikClientPropsSignal.value) {
 						const val = qwikClientPropsSignal.value[key]
-						props[key] = isSignal(val) ? client.signal(val.value) : val
+						props[key] = isSignal(val) ? signal(val.value) : val
 					}
 					vitroPropsSignal.value = noSerialize(props)
 				} else {
@@ -82,41 +85,39 @@ export function qwikifyQrl<PROPS extends {}>(
 			})
 
 			// Task takes cares of updates and partial hydration
-			useTask$(
-				async ({ track, cleanup }) => {
-					const isWakeup = track(wakeup)
+			useTask$(async ({ track, cleanup }) => {
+				const isWakeup = track(wakeup)
 
-					if (!isBrowser) {
-						return
-					}
+				if (!isBrowser) {
+					return
+				}
 
-					if (!isWakeup) return
+				if (!isWakeup) return
 
-					const VitroComp = await vitroCmp$.resolve()
+				const VitroComp = await vitroCmp$.resolve()
 
-					vitroCmp.value = noSerialize(VitroComp)
+				vitroCmp.value = noSerialize(VitroComp)
 
-					// Root props update
-					if (hostRef.value) {
-						dispose.value?.()
-						const disposeFn = client.render(
-							main(
-								slotRef.value,
-								scopeId,
-								vitroCmp.value,
-								vitroPropsSignal.value ?? {},
-								qwikClientPropsSignal,
-							),
-							hostRef.value,
-						)
-						dispose.value = noSerialize(disposeFn)
-					}
+				// Root props update
+				if (hostRef.value) {
+					dispose.value?.()
+					const disposeFn = render(
+						main(
+							slotRef.value,
+							scopeId,
+							vitroCmp.value,
+							vitroPropsSignal.value ?? {},
+							qwikClientPropsSignal,
+						),
+						hostRef.value,
+					)
+					dispose.value = noSerialize(disposeFn)
+				}
 
-					cleanup(() => {
-						dispose.value?.()
-					})
-				},
-			)
+				cleanup(() => {
+					dispose.value?.()
+				})
+			})
 			return (
 				<RenderOnce>
 					<Host
@@ -125,7 +126,7 @@ export function qwikifyQrl<PROPS extends {}>(
 							if (isBrowser) {
 								hostRef.value = el
 								queueMicrotask(() => {
-									const disposeFn = client.render(
+									const disposeFn = render(
 										main(
 											slotRef.value,
 											scopeId,
