@@ -8,7 +8,12 @@ import {
 	untrack as qwikUntrack,
 } from '@builder.io/qwik'
 import { isServer } from '@builder.io/qwik/build'
-import { createElement, isObservable, untrack, useEffect } from 'vitro'
+import {
+	createElement,
+	isObservable,
+	untrack as vitroUntrack,
+	useEffect,
+} from 'vitro'
 import type { QwikifyOptions, QwikifyProps } from './types'
 
 export function main(
@@ -31,7 +36,7 @@ export function main(
 			}
 		}
 	})
-	return untrack(() => {
+	return vitroUntrack(() => {
 		return createElement(RootCmp, {
 			...props,
 			children: createElement(SlotElement, {

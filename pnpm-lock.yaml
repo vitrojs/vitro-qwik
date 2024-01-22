@@ -7,7 +7,7 @@ settings:
 dependencies:
   vitro:
     specifier: github:vitrojs/vitro
-    version: github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a
+    version: github.com/vitrojs/vitro/de28e4938b1e106cf3f1f381b0f2919851861be6
 
 devDependencies:
   '@biomejs/biome':
@@ -1845,7 +1845,7 @@ packages:
     dependencies:
       '@ark-ui/anatomy': 1.3.0(@internationalized/date@3.5.1)
       '@tanstack/table-core': 8.11.6
-      '@vitro/zag': github.com/vitrojs/vitro-zag/88004179dcf1d2a51eec22ebe3a39988f344d2a8(@zag-js/core@0.32.1)(@zag-js/types@0.32.1)(@zag-js/utils@0.32.1)(vitro@0.57.5)
+      '@vitro/zag': github.com/vitrojs/vitro-zag/88004179dcf1d2a51eec22ebe3a39988f344d2a8(@zag-js/core@0.32.1)(@zag-js/types@0.32.1)(@zag-js/utils@0.32.1)(vitro@0.57.7)
       '@zag-js/accordion': 0.32.1
       '@zag-js/avatar': 0.32.1
       '@zag-js/carousel': 0.32.1
@@ -1880,10 +1880,10 @@ packages:
       '@zag-js/types': 0.32.1
       '@zag-js/utils': 0.32.1
       fast-equals: 5.0.1
-      vitro: github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a
+      vitro: github.com/vitrojs/vitro/de28e4938b1e106cf3f1f381b0f2919851861be6
     dev: true
 
-  github.com/vitrojs/vitro-zag/88004179dcf1d2a51eec22ebe3a39988f344d2a8(@zag-js/core@0.32.1)(@zag-js/types@0.32.1)(@zag-js/utils@0.32.1)(vitro@0.57.5):
+  github.com/vitrojs/vitro-zag/88004179dcf1d2a51eec22ebe3a39988f344d2a8(@zag-js/core@0.32.1)(@zag-js/types@0.32.1)(@zag-js/utils@0.32.1)(vitro@0.57.7):
     resolution: {tarball: https://codeload.github.com/vitrojs/vitro-zag/tar.gz/88004179dcf1d2a51eec22ebe3a39988f344d2a8}
     id: github.com/vitrojs/vitro-zag/88004179dcf1d2a51eec22ebe3a39988f344d2a8
     name: '@vitro/zag'
@@ -1898,13 +1898,13 @@ packages:
       '@zag-js/core': 0.32.1
       '@zag-js/types': 0.32.1
       '@zag-js/utils': 0.32.1
-      vitro: github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a
+      vitro: github.com/vitrojs/vitro/de28e4938b1e106cf3f1f381b0f2919851861be6
     dev: true
 
-  github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a:
-    resolution: {tarball: https://codeload.github.com/vitrojs/vitro/tar.gz/02f4255542caf06501dbce67446645435494170a}
+  github.com/vitrojs/vitro/de28e4938b1e106cf3f1f381b0f2919851861be6:
+    resolution: {tarball: https://codeload.github.com/vitrojs/vitro/tar.gz/de28e4938b1e106cf3f1f381b0f2919851861be6}
     name: vitro
-    version: 0.57.5
+    version: 0.57.7
     requiresBuild: true
     dependencies:
       htm: 3.1.1

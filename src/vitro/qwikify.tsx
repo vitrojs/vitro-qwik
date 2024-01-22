@@ -16,9 +16,7 @@ import {
 } from '@builder.io/qwik'
 
 import { isBrowser, isServer } from '@builder.io/qwik/build'
-// import { render, signal } from './client'
-
-export { $$ as get, render, $ as signal } from 'vitro';
+import { observable, render } from 'vitro'
 
 import { main, splitProps, useWakeupSignal } from './slot'
 
@@ -71,7 +69,7 @@ export function qwikifyQrl<PROPS extends {}>(
 					const props: Record<string, any> = {}
 					for (const key in qwikClientPropsSignal.value) {
 						const val = qwikClientPropsSignal.value[key]
-						props[key] = isSignal(val) ? signal(val.value) : val
+						props[key] = isSignal(val) ? observable(val.value) : val
 					}
 					vitroPropsSignal.value = noSerialize(props)
 				} else {
