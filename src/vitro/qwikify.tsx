@@ -54,6 +54,7 @@ export function qwikifyQrl<PROPS extends {}>(
 			const Host = opts?.tagName ?? ('qwik-vitro' as any)
 
 			useTask$(({ track }) => {
+				track(wakeup)
 				for (const key in qwikClientProps) {
 					const val = qwikClientProps[key]
 					if (isSignal(val)) {
@@ -66,6 +67,7 @@ export function qwikifyQrl<PROPS extends {}>(
 				const vitroProps = vitroPropsSignal.value
 
 				if (!vitroProps) {
+					// first pass
 					const props: Record<string, any> = {}
 					for (const key in qwikClientPropsSignal.value) {
 						const val = qwikClientPropsSignal.value[key]
@@ -73,6 +75,7 @@ export function qwikifyQrl<PROPS extends {}>(
 					}
 					vitroPropsSignal.value = noSerialize(props)
 				} else {
+					// on qwik props signal change
 					for (const key in vitroProps) {
 						const val = vitroProps[key]
 						if (isObservable(val)) {
