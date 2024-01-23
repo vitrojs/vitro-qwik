@@ -34,8 +34,8 @@ export interface QwikifyBase {
 	 */
 	'host:onMouseOver$'?: PropFunction<(ev: Event) => void>
 
-	'host:class': ClassList | Signal<ClassList> | undefined
-	'host:style': CSSProperties | string | undefined
+	'host:class'?: ClassList | Signal<ClassList>
+	'host:style'?: CSSProperties | string
 
 	children?: any
 }
