@@ -1,6 +1,6 @@
 {
   "name": "vitro-qwik",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Qwik-vitro allows adding vitro components into existing Qwik application",
   "scripts": {
     "postinstall": "test lib || pnpm run build.lib",
