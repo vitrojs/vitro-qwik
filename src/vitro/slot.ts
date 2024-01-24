@@ -8,18 +8,16 @@ import {
 	useTask$,
 } from '@builder.io/qwik'
 import { isServer } from '@builder.io/qwik/build'
-import { createContext, createElement, h, isObservable, useEffect } from 'vitro'
+import { createElement, h, isObservable, useEffect } from 'vitro'
 import type { QwikifyOptions, QwikifyProps } from './types'
 
 export function main({
-	contextValue,
 	slotEl,
 	scopeId,
 	RootCmp,
 	props,
 	qwikClientPropsSignal,
 }: {
-	contextValue: any
 	slotEl: Element | undefined
 	scopeId: string
 	RootCmp: any
@@ -40,16 +38,11 @@ export function main({
 		}
 	})
 
-	const Ctx = createContext<any>()
-
-	return h(Ctx.Provider, {
-		value: contextValue,
-		children: h(RootCmp, {
-			...props,
-			children: h(SlotElement, {
-				slotEl,
-				scopeId,
-			}),
+	return h(RootCmp, {
+		...props,
+		children: h(SlotElement, {
+			slotEl,
+			scopeId,
 		}),
 	})
 }

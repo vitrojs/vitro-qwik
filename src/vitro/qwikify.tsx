@@ -5,12 +5,9 @@ import {
 	SkipRender,
 	Slot,
 	component$,
-	createContextId,
 	implicit$FirstArg,
 	isSignal,
 	noSerialize,
-	useContextProvider,
-	useContext as useQwikContext,
 	useSignal,
 	useStylesScoped$,
 	useTask$,
@@ -25,8 +22,6 @@ import { main, splitProps, useWakeupSignal } from './slot'
 
 import { ObservableReadonly, isObservable } from 'vitro'
 import type { FunctionComponent, QwikifyOptions, QwikifyProps } from './types'
-
-const defaultContextId = createContextId<{}>('qwikify')
 
 export function qwikifyQrl<PROPS extends {}>(
 	vitroCmp$: QRL<FunctionComponent<PROPS & { children?: any }>>,
@@ -43,14 +38,6 @@ export function qwikifyQrl<PROPS extends {}>(
 			const { scopeId } = useStylesScoped$(
 				`q-slot{display:none} q-slotc,q-slotc>q-slot{display:contents}`,
 			)
-
-			let contextId = opts?.context || defaultContextId
-
-			if (contextId === defaultContextId) {
-				useContextProvider(contextId, {})
-			}
-
-			const contextValue = useQwikContext(contextId)
 
 			const hostRef = useSignal<Element>()
 			const slotRef = useSignal<Element>()
@@ -121,7 +108,6 @@ export function qwikifyQrl<PROPS extends {}>(
 
 				const disposeFn = render(
 					main({
-						contextValue: contextValue,
 						slotEl: slotRef.value,
 						scopeId: scopeId,
 						RootCmp: vitroCmp.value,

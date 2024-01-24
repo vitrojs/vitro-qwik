@@ -55,7 +55,6 @@ export type TransformProp<
 
 export type QwikifyProps<PROPS extends {}> = TransformProps<PROPS> & QwikifyBase
 
-export interface QwikifyOptions<C={}> {
+export interface QwikifyOptions {
 	tagName?: string
-	context?: ContextId<C>
 }
