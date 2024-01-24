@@ -5,9 +5,12 @@ import {
 	SkipRender,
 	Slot,
 	component$,
+	createContextId,
 	implicit$FirstArg,
 	isSignal,
 	noSerialize,
+	useContextProvider,
+	useContext as useQwikContext,
 	useSignal,
 	useStylesScoped$,
 	useTask$,
@@ -22,6 +25,8 @@ import { main, splitProps, useWakeupSignal } from './slot'
 
 import { ObservableReadonly, isObservable } from 'vitro'
 import type { FunctionComponent, QwikifyOptions, QwikifyProps } from './types'
+
+const defaultContextId = createContextId<{}>('qwikify')
 
 export function qwikifyQrl<PROPS extends {}>(
 	vitroCmp$: QRL<FunctionComponent<PROPS & { children?: any }>>,
@@ -38,6 +43,15 @@ export function qwikifyQrl<PROPS extends {}>(
 			const { scopeId } = useStylesScoped$(
 				`q-slot{display:none} q-slotc,q-slotc>q-slot{display:contents}`,
 			)
+
+			let contextId = opts?.context || defaultContextId
+
+			if (contextId === defaultContextId) {
+				useContextProvider(contextId, {})
+			}
+
+			const contextValue = useQwikContext(contextId)
+
 			const hostRef = useSignal<Element>()
 			const slotRef = useSignal<Element>()
 			const vitroCmp = useSignal<NoSerialize<FunctionComponent<PROPS>>>()
@@ -88,32 +102,35 @@ export function qwikifyQrl<PROPS extends {}>(
 			// Task takes cares of updates and partial hydration
 			useTask$(async ({ track, cleanup }) => {
 				const isWakeup = track(wakeup)
-
+				const hostEl = track(hostRef)
 				if (!isBrowser) {
 					return
 				}
 
 				if (!isWakeup) return
 
+				if (!hostEl) return
+
 				const VitroComp = await vitroCmp$.resolve()
 
+				console.log('vitroCmp getted')
 				vitroCmp.value = noSerialize(VitroComp)
 
-				// Root props update
-				if (hostRef.value) {
-					dispose.value?.()
-					const disposeFn = render(
-						main(
-							slotRef.value,
-							scopeId,
-							vitroCmp.value,
-							vitroPropsSignal.value ?? {},
-							qwikClientPropsSignal,
-						),
-						hostRef.value,
-					)
-					dispose.value = noSerialize(disposeFn)
-				}
+				// dispose prev render
+				dispose.value?.()
+
+				const disposeFn = render(
+					main({
+						contextValue: contextValue,
+						slotEl: slotRef.value,
+						scopeId: scopeId,
+						RootCmp: vitroCmp.value,
+						props: vitroPropsSignal.value ?? {},
+						qwikClientPropsSignal: qwikClientPropsSignal,
+					}),
+					hostRef.value,
+				)
+				dispose.value = noSerialize(disposeFn)
 
 				cleanup(() => {
 					dispose.value?.()
@@ -124,24 +141,7 @@ export function qwikifyQrl<PROPS extends {}>(
 					<Host
 						{...qwikHostProps}
 						ref={(el: Element) => {
-							if (isBrowser) {
-								hostRef.value = el
-								queueMicrotask(() => {
-									const disposeFn = render(
-										main(
-											slotRef.value,
-											scopeId,
-											vitroCmp.value,
-											props,
-											qwikClientPropsSignal,
-										),
-										el,
-									)
-									dispose.value = noSerialize(disposeFn)
-								})
-							} else {
-								hostRef.value = el
-							}
+							hostRef.value = el
 						}}
 					>
 						{SkipRender}

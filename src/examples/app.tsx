@@ -1,10 +1,11 @@
 /** @jsxImportSource vitro */
 
-import { signal } from '../index.qwik';
+
+import { observable } from 'vitro'
 import { qwikify$ } from '../vitro/qwikify';
 export const App = qwikify$(
   (props: { multiple: number; children?: JSX.Child }) => {
-    const count = signal(0)
+    const count = observable(0)
     const increment = () => count((i) => props.multiple * (i + 1))
     const decrement = () => count((i) => props.multiple * (i - 1))
 

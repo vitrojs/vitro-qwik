@@ -2,27 +2,30 @@ import {
 	$,
 	Signal,
 	isSignal,
+	untrack as qwikUntrack,
 	useOnDocument,
 	useSignal,
 	useTask$,
-	untrack as qwikUntrack,
 } from '@builder.io/qwik'
 import { isServer } from '@builder.io/qwik/build'
-import {
-	createElement,
-	isObservable,
-	untrack as vitroUntrack,
-	useEffect,
-} from 'vitro'
+import { createContext, createElement, h, isObservable, useEffect } from 'vitro'
 import type { QwikifyOptions, QwikifyProps } from './types'
 
-export function main(
-	slotEl: Element | undefined,
-	scopeId: string,
-	RootCmp: any,
-	props: any,
-	qwikClientPropsSignal: Signal<Record<string, any>>,
-): JSX.Element {
+export function main({
+	contextValue,
+	slotEl,
+	scopeId,
+	RootCmp,
+	props,
+	qwikClientPropsSignal,
+}: {
+	contextValue: any
+	slotEl: Element | undefined
+	scopeId: string
+	RootCmp: any
+	props: any
+	qwikClientPropsSignal: Signal<Record<string, any>>
+}): JSX.Element {
 	useEffect(() => {
 		for (const key in props) {
 			const val = props[key]
@@ -36,14 +39,18 @@ export function main(
 			}
 		}
 	})
-	return vitroUntrack(() => {
-		return createElement(RootCmp, {
+
+	const Ctx = createContext<any>()
+
+	return h(Ctx.Provider, {
+		value: contextValue,
+		children: h(RootCmp, {
 			...props,
-			children: createElement(SlotElement, {
+			children: h(SlotElement, {
 				slotEl,
 				scopeId,
 			}),
-		})
+		}),
 	})
 }
 const SlotElement = (props: {
@@ -100,14 +107,16 @@ export const splitProps = (props: Record<string, any>) => {
 
 export const useWakeupSignal = (
 	props: QwikifyProps<{}>,
-	opts: QwikifyOptions = {},
+	opts?: QwikifyOptions,
 ) => {
 	const signal = useSignal(false)
 	const activate = $(() => (signal.value = true))
 	if (isServer) {
 		if (props['client:load']) {
 			useOnDocument('qinit', activate)
-		} else if (props['client:idle']) {
+		}
+
+		if (props['client:idle']) {
 			useOnDocument('qidle', activate)
 		}
 
@@ -121,6 +130,7 @@ export const useWakeupSignal = (
 			})
 		}
 	}
+
 	return [signal, activate] as const
 }
 

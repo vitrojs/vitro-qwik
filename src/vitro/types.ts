@@ -1,6 +1,7 @@
 import type {
 	CSSProperties,
 	ClassList,
+	ContextId,
 	PropFunction,
 	Signal,
 } from '@builder.io/qwik'
@@ -54,6 +55,7 @@ export type TransformProp<
 
 export type QwikifyProps<PROPS extends {}> = TransformProps<PROPS> & QwikifyBase
 
-export interface QwikifyOptions {
+export interface QwikifyOptions<C={}> {
 	tagName?: string
+	context?: ContextId<C>
 }
